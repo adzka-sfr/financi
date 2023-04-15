@@ -71,7 +71,7 @@ include '../header.php';
                 </li>
 
                 <!-- Budget -->
-                <li class="menu-item <?php
+                <!-- <li class="menu-item <?php
                                         if ($_GET['page'] == 'budget') {
                                             echo "active";
                                         }
@@ -80,10 +80,10 @@ include '../header.php';
                         <i class="menu-icon tf-icons bx bx-wallet"></i>
                         <div data-i18n="Analytics">Budget</div>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Budget -->
-                <li class="menu-item <?php
+                <!-- <li class="menu-item <?php
                                         if ($_GET['page'] == 'customize') {
                                             echo "active";
                                         }
@@ -92,7 +92,7 @@ include '../header.php';
                         <i class="menu-icon tf-icons bx bx-first-aid"></i>
                         <div data-i18n="Analytics">Customize</div>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Layouts -->
                 <!-- <li class="menu-item">
@@ -480,7 +480,7 @@ include '../header.php';
                                         <span class="align-middle">Settings</span>
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a class="dropdown-item" href="#">
                                         <span class="d-flex align-items-center align-middle">
                                             <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
@@ -488,7 +488,7 @@ include '../header.php';
                                             <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                                         </span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
@@ -540,6 +540,7 @@ include '../header.php';
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
 </div>
+
 
 <!-- / Content -->
 

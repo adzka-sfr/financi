@@ -1,6 +1,6 @@
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
-        <div class="col-md-12 col-lg-12 order-1 mb-4">
+        <!-- <div class="col-md-12 col-lg-12 order-1 mb-4">
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="card-title mb-0">
@@ -112,7 +112,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-lg-12 mb-4 order-2">
             <div class="card">
                 <div class="card-body">
@@ -134,51 +134,60 @@
                         </div>
                     </div> -->
                     <div class="d-flex align-items-end row">
+
                         <div class="col-sm-6">
                             <div class="mb-3">
-                                <label for="defaultSelect" class="form-label">Nominal</label>
+                                <div id="nomerror" class="col-12 mb-1" style="background-color:#F8D7DA; padding-left: 10px; display: none;">
+                                    <label for="defaultSelect" class="form-label" style="color: #B02A37;">Masukkan nominal</label>
+                                </div>
                                 <div class="input-group input-group-merge">
                                     <span class="input-group-text">Rp</span>
-                                    <input type="number" name="nominal" id="nominal" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" class="form-control" placeholder="0" aria-label="Amount (to the nearest dollar)" />
+                                    <input type="number" required name="nominal" id="nominal" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" class="form-control" placeholder="0" aria-label="Amount (to the nearest dollar)" />
                                     <span class="input-group-text">.00</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-3">
-                                <label for="defaultSelect" class="form-label">Category</label>
-                                <select id="defaultSelect" class="form-select">
-                                    <option>Default select</option>
-                                    <option value="c112">Food&Beverage</option>
-                                    <option value="2">Gasoline</option>
-                                    <option value="3">Grocery</option>
-                                    <option value="3">Kost</option>
-                                    <option value="3">Electrical</option>
-                                    <option value="3">Internet</option>
-                                    <option value="3">Skincare</option>
-                                    <option value="3">Spoiled</option>
+                                <div id="katerror" class="col-12 mb-1" style="background-color:#F8D7DA; padding-left: 10px; display: none;">
+                                    <label for="defaultSelect" class="form-label" style="color: #B02A37;">Pilih category</label>
+                                </div>
+                                <select required id="kategori" name="kategori" class="form-select cari">
+                                    <option value="" selected disabled>Select category</option>
+                                    <?php
+                                    $sql = mysqli_query($connect, "SELECT * FROM outcome_category_list ORDER BY c_name ASC");
+                                    while ($data = mysqli_fetch_array($sql)) {
+                                    ?>
+                                        <option value="<?= $data['c_code'] ?>"><?= $data['c_name'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
                                 </select>
                             </div>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#defaultSelect').select2();
-                                });
-                            </script>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="mb-3 row">
-                                <div class="col-md-112">
-                                    <input class="form-control" type="datetime-local" value="<?= $now ?>" id="html5-datetime-local-input" />
+                                <div class="col-md-12">
+                                    <div id="tangerror" class="col-12 mb-1" style="background-color:#F8D7DA; padding-left: 10px; display: none;">
+                                        <label for="defaultSelect" class="form-label" style="color: #B02A37;">Masukkan tanggal dan waktu</label>
+                                    </div>
+                                    <div id="masadepanerror" class="col-12 mb-1" style="background-color:#F8D7DA; padding-left: 10px; display: none;">
+                                        <label for="defaultSelect" class="form-label" style="color: #B02A37;">Tidak bisa memasukkan waktu masa depan</label>
+                                    </div>
+                                    <input required class="form-control" type="datetime-local" name="tanggal" id="tanggal" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
+                            <div id="noterror" class="col-12 mb-1" style="background-color:#F8D7DA; padding-left: 10px; display: none;">
+                                <label for="defaultSelect" class="form-label" style="color: #B02A37;">Masukkan note</label>
+                            </div>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Mcd, Cola, etc" aria-describedby="floatingInputHelp" />
+                                <input type="text" required name="note" class="form-control" id="note" placeholder="Mcd, Cola, etc" aria-describedby="floatingInputHelp" />
                                 <label for="floatingInput">Note</label>
                                 <div id="floatingInputHelp" class="form-text">We'll never share your details with anyone else.</div>
                             </div>
@@ -193,89 +202,117 @@
                             </button> -->
                         </div>
                     </div>
+                    <script>
+                        $(document).ready(function() {
+                            $('#record').click(function() {
+                                var nominal = $('#nominal').val();
+                                var kategori = $('#kategori').val();
+                                var tanggal = $('#tanggal').val();
+                                var catatan = $('#note').val();
+
+                                // memastikan tidak melakukan input waktu masa depan
+                                var mydate = new Date();
+                                var cek = new Date(tanggal);
+                                if (mydate > cek) {
+                                    var info = 'aman';
+                                } else {
+                                    var info = 'gaiso input pengeluaran masa depan cok';
+                                }
+
+                                if (nominal == '') {
+                                    $('#nomerror').show();
+                                    setTimeout(function() {
+                                        $('#nomerror').hide()
+                                    }, 3000);
+                                }
+                                if (kategori == null) {
+                                    $('#katerror').show();
+                                    setTimeout(function() {
+                                        $('#katerror').hide()
+                                    }, 3000);
+                                }
+                                if (tanggal == '') {
+                                    $('#tangerror').show();
+                                    setTimeout(function() {
+                                        $('#tangerror').hide()
+                                    }, 3000);
+                                } else {
+                                    if (info != 'aman') {
+                                        $('#masadepanerror').show();
+                                        setTimeout(function() {
+                                            $('#masadepanerror').hide()
+                                        }, 3000);
+                                    }
+                                }
+                                if (catatan == '') {
+                                    $('#noterror').show();
+                                    setTimeout(function() {
+                                        $('#noterror').hide()
+                                    }, 3000);
+                                }
+
+
+                                // jika sudah isi semua
+                                if (nominal != '' && kategori != null && tanggal != '' && catatan != '' && info == 'aman') {
+                                    $.ajax({
+                                        url: 'record.php',
+                                        type: 'POST',
+                                        data: {
+                                            "nominal": nominal,
+                                            "kategori": kategori,
+                                            "tanggal": tanggal,
+                                            "catatan": catatan
+                                        },
+                                        success: function(response) {
+                                            if (response == 'success') {
+                                                Swal.fire({
+                                                    title: 'Succes!',
+                                                    text: 'Data recorded!',
+                                                    icon: 'success',
+                                                    timer: 1500,
+                                                    showCancelButton: false,
+                                                    showConfirmButton: false
+                                                });
+                                                $('#nominal').val('');
+                                                $('#kategori').val('').trigger('change');
+                                                $('#tanggal').val('');
+                                                $('#note').val('');
+                                            } else {
+                                                Swal.fire({
+                                                    title: 'Error!',
+                                                    text: 'Server busy!',
+                                                    type: 'error',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        });
+                    </script>
+
                 </div>
             </div>
         </div>
 
         <!-- Total Revenue -->
         <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-3 mb-4">
-            <div class="card">
-                <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
-                        <div class="card-title mb-0">
-                            <h5 class="m-0 me-2">Spend Statistics</h5>
-                            <small class="text-muted">Rp 4.543.000 Total Spend</small>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="d-flex flex-column align-items-center gap-1">
-                                <h2 class="mb-2">230</h2>
-                                <span>Total Transaction</span>
-                            </div>
-                            <div id="orderStatisticsChart"></div>
-                        </div>
-                        <ul class="p-0 m-0">
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-restaurant"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Food & Beverage</h6>
-                                        <small class="text-muted">Pak Gembus, KFC, Nasi Tongkol-Warteg</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">576k</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-success"><i class="bx bx-closet"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Spoiled</h6>
-                                        <small class="text-muted">Djarum 12, Es Krim, Shoes</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">23k</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex mb-4 pb-1">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-info"><i class="bx bx-home-alt"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Kost</h6>
-                                        <small class="text-muted">Kost November</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">1100K</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="d-flex">
-                                <div class="avatar flex-shrink-0 me-3">
-                                    <span class="avatar-initial rounded bg-label-secondary"><i class="bx bx-football"></i></span>
-                                </div>
-                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                    <div class="me-2">
-                                        <h6 class="mb-0">Gasoline</h6>
-                                        <small class="text-muted">Pertalite, Pertamax</small>
-                                    </div>
-                                    <div class="user-progress">
-                                        <small class="fw-semibold">100k</small>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
+            <div id="pagedatabulanan">
             </div>
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+
+                    $('#pagedatabulanan').load('rekapbulanan.php').fadeIn("slow");
+
+                    var auto_refresh = setInterval(function() {
+                        $('#pagedatabulanan').load('rekapbulanan.php').fadeIn("slow");
+                    }, 1000);
+
+                });
+            </script>
         </div>
         <!--/ Total Revenue -->
     </div>

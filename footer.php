@@ -1,7 +1,11 @@
 <!-- Content -->
 
 <!-- select2 -->
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.cari').select2();
+    });
+</script>
 <!-- select2 -->
 
 <!-- Core JS -->
@@ -20,9 +24,11 @@
 <script src="../assets/js/main.js"></script>
 
 <!-- Page JS -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
+
+
 
 </html>
