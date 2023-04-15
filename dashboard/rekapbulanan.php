@@ -38,7 +38,7 @@ $uid_user = $_SESSION['uid'];
 
             <!-- list pengeluaran -->
             <?php
-            $sql_list = mysqli_query($connect, "SELECT DISTINCT c_date FROM outcome_history WHERE c_date LIKE '$bulan%' ORDER BY c_date DESC");
+            $sql_list = mysqli_query($connect, "SELECT DISTINCT c_date FROM outcome_history WHERE c_uid = '$uid_user' AND c_date LIKE '$bulan%' ORDER BY c_date DESC");
             while ($data_list = mysqli_fetch_array($sql_list)) {
                 // get day
                 $today = date('Y-m-d', strtotime($now));
@@ -55,7 +55,7 @@ $uid_user = $_SESSION['uid'];
                 $month_year = date('F Y', strtotime($data_list['c_date']));
 
                 // get total 
-                $sql_list1 = mysqli_query($connect, "SELECT SUM(c_nominal) AS total_daily FROM outcome_history WHERE c_date = '$data_list[c_date]'");
+                $sql_list1 = mysqli_query($connect, "SELECT SUM(c_nominal) AS total_daily FROM outcome_history WHERE c_uid = '$uid_user' AND c_date = '$data_list[c_date]'");
                 $data_list1 = mysqli_fetch_array($sql_list1);
                 $total = $data_list1['total_daily'];
                 $total = number_format($total, 0, ',', '.');
@@ -85,7 +85,7 @@ $uid_user = $_SESSION['uid'];
                 </div>
                 <ul class="p-0 m-0">
                     <?php
-                    $sql_list2 = mysqli_query($connect, "SELECT oh.c_nominal, oh.c_note, ocl.c_name, ocl.c_icon, ocl.c_class FROM outcome_history oh JOIN outcome_category_list ocl ON oh.c_category = ocl.c_code WHERE oh.c_date = '$data_list[c_date]' ORDER BY c_time DESC");
+                    $sql_list2 = mysqli_query($connect, "SELECT oh.c_nominal, oh.c_note, ocl.c_name, ocl.c_icon, ocl.c_class FROM outcome_history oh JOIN outcome_category_list ocl ON oh.c_category = ocl.c_code WHERE oh.c_uid = '$uid_user' AND oh.c_date = '$data_list[c_date]' ORDER BY c_time DESC");
                     while ($data_list2 = mysqli_fetch_array($sql_list2)) {
                         $nominal_item = number_format($data_list2['c_nominal'], 0, ',', '.');
                     ?>
