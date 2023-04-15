@@ -13,8 +13,8 @@ if (!$connect) {
 //base url
 function base_url($url = null)
 {
-    // $base_url = "https://app-financi.kaadzka.com/";
-    $base_url = "//localhost:8080/financi";
+    $base_url = "https://app-financi.kaadzka.com/";
+    // $base_url = "//localhost:8080/financi";
     // $base_url = "https://172.17.192.242/financi";
     // $base_url = "https://192.168.137.1/financi";
     if ($url != null) {
