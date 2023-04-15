@@ -309,7 +309,7 @@
 
                     var auto_refresh = setInterval(function() {
                         $('#pagedatabulanan').load('rekapbulanan.php').fadeIn("slow");
-                    }, 2000);
+                    }, 1000);
 
                 });
             </script>
