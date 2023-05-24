@@ -189,7 +189,7 @@
                             <div class="form-floating">
                                 <input type="text" required name="note" class="form-control" id="note" placeholder="Mcd, Cola, etc" aria-describedby="floatingInputHelp" />
                                 <label for="floatingInput">Note</label>
-                                <div id="floatingInputHelp" class="form-text">We'll never share your details with anyone else.</div>
+                                <!-- <div id="floatingInputHelp" class="form-text">We'll never share your details with anyone else.</div> -->
                             </div>
                         </div>
                     </div>
