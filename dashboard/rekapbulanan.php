@@ -3,8 +3,8 @@ session_start();
 date_default_timezone_set('Asia/Jakarta');
 $now = date('Y-m-d H:i:s');
 
-// $connect = new mysqli("localhost", "root", "", "arto");
-$connect = new mysqli("localhost", "kaad7559_fahmi", "rahmadiani", "kaad7559_financi");
+$connect = new mysqli("localhost", "root", "", "financi");
+// $connect = new mysqli("localhost", "kaad7559_fahmi", "rahmadiani", "kaad7559_financi");
 
 $uid_user = $_SESSION['uid'];
 ?>
@@ -55,7 +55,7 @@ $uid_user = $_SESSION['uid'];
                 // month year
                 $month_year = date('F Y', strtotime($data_list['c_date']));
 
-                // get total 
+                // get total
                 $sql_list1 = mysqli_query($connect, "SELECT SUM(c_nominal) AS total_daily FROM outcome_history WHERE c_uid = '$uid_user' AND c_date = '$data_list[c_date]'");
                 $data_list1 = mysqli_fetch_array($sql_list1);
                 $total = $data_list1['total_daily'];
