@@ -78,6 +78,7 @@
                             <button id="sign_up" type="button" class="btn btn-primary d-grid w-100">Sign up</button>
                         </div>
                     </form>
+                    <!-- Logo -->
 
                     <script>
                         $(document).ready(function() {
